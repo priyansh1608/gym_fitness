@@ -1,0 +1,424 @@
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f3f6fa;
+
+    color: #17202a;
+}
+
+
+nav {
+
+    background: #111827;
+
+    padding: 18px 7%;
+
+}
+
+
+nav a {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+}
+
+
+.container {
+
+    width: 92%;
+
+    max-width: 1100px;
+
+    margin: 35px auto;
+
+}
+
+
+.hero {
+
+    background: white;
+
+    padding: 35px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.08);
+
+}
+
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+
+}
+
+
+.card {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 15px;
+
+    border: 1px solid #e2e8f0;
+
+    margin-bottom: 20px;
+
+}
+
+
+label {
+
+    display: block;
+
+    font-weight: bold;
+
+    margin-bottom: 7px;
+
+}
+
+
+input,
+select {
+
+    width: 100%;
+
+    padding: 12px;
+
+    margin-bottom: 18px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+}
+
+
+button,
+.btn {
+
+    display: inline-block;
+
+    background: #16a34a;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 12px 20px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    margin: 5px;
+
+}
+
+
+button:hover,
+.btn:hover {
+
+    background: #15803d;
+
+}
+
+
+video {
+
+    width: 100%;
+
+    max-width: 700px;
+
+    background: black;
+
+    border-radius: 15px;
+
+}
+
+
+#canvas {
+
+    display: none;
+
+}
+
+
+.camera-wrap {
+
+    text-align: center;
+
+}
+
+
+.metric {
+
+    font-size: 27px;
+
+    font-weight: bold;
+
+}
+
+
+.muted {
+
+    color: #64748b;
+
+}
+
+
+.alert {
+
+    padding: 14px;
+
+    background: #fff7ed;
+
+    color: #9a3412;
+
+    border-radius: 8px;
+
+    margin-bottom: 15px;
+
+}
+
+
+li {
+
+    margin-bottom: 10px;
+
+}
+
+
+@media (max-width: 700px) {
+
+    .grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .hero {
+
+        padding: 20px;
+
+    }
+
+}
+
+/* =========================================
+   BODY SCAN ANIMATION
+   ========================================= */
+
+.scan-stage {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto 15px;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 0 0 2px #16a34a, 0 0 28px rgba(22, 163, 74, 0.35);
+}
+
+.scan-stage video {
+    display: block;
+    width: 100%;
+    max-width: none;
+    border-radius: 0;
+    transform: scaleX(-1);
+}
+
+.scan-stage #overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* HUD corner brackets */
+.hud {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    border: 3px solid #4ade80;
+    pointer-events: none;
+}
+.hud.tl { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+.hud.tr { top: 10px; right: 10px; border-left: 0; border-bottom: 0; }
+.hud.bl { bottom: 10px; left: 10px; border-right: 0; border-top: 0; }
+.hud.br { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+
+.scan-stage.scanning .hud { animation: hudPulse 1s ease-in-out infinite; }
+
+@keyframes hudPulse {
+    50% { opacity: 0.35; }
+}
+
+/* Status chip + countdown */
+.scan-chip {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(17, 24, 39, 0.82);
+    color: #4ade80;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 6px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.scan-chip.warn { color: #fbbf24; }
+
+.countdown {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 110px;
+    font-weight: bold;
+    color: #4ade80;
+    text-shadow: 0 0 25px rgba(74, 222, 128, 0.8);
+}
+
+.countdown.show { display: flex; }
+
+/* Progress bar */
+.progress {
+    height: 8px;
+    max-width: 700px;
+    margin: 0 auto 18px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress > div {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #16a34a, #4ade80);
+    transition: width 0.15s linear;
+}
+
+/* Region checklist */
+.regions {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 10px;
+    max-width: 700px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.regions li {
+    margin: 0;
+    padding: 9px 6px;
+    border-radius: 10px;
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #e2e8f0;
+    transition: all 0.25s;
+}
+
+.regions li.active {
+    background: #ecfdf5;
+    color: #15803d;
+    border-color: #4ade80;
+}
+
+.regions li.done {
+    background: #16a34a;
+    color: white;
+    border-color: #16a34a;
+}
+
+.regions li.done::before { content: "✓ "; }
+
+.regions li.active::before {
+    content: "";
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin-right: 6px;
+    border-radius: 50%;
+    background: #16a34a;
+    animation: hudPulse 0.6s ease-in-out infinite;
+}
+
+/* Plan-building steps */
+.steps {
+    display: none;
+    max-width: 700px;
+    margin: 12px auto 0;
+    text-align: left;
+}
+
+.steps.show { display: block; }
+
+.steps div {
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    color: #64748b;
+    font-weight: bold;
+}
+
+.steps div.run { background: #fff7ed; color: #9a3412; }
+.steps div.run::before { content: "⏳ "; }
+.steps div.ok { background: #ecfdf5; color: #15803d; }
+.steps div.ok::before { content: "✅ "; }
+
+button.secondary {
+    background: #64748b;
+}
+
+button.secondary:hover {
+    background: #475569;
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+@media (max-width: 700px) {
+    .regions { grid-template-columns: repeat(2, 1fr); }
+    .countdown { font-size: 80px; }
+}

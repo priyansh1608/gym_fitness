@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card camera-wrap">
+
+        <h1> Body Structure Scanner</h1>
+
+        <p class="muted">
+            Camera se 2 meter door khade ho, sir se pair tak
+            poori body dikhni chahiye. Achhi light me scan karo.
+        </p>
+
+        <div class="scan-stage" id="stage">
+            <video id="camera" autoplay playsinline muted></video>
+            <canvas id="overlay"></canvas>
+
+            <span class="hud tl"></span>
+            <span class="hud tr"></span>
+            <span class="hud bl"></span>
+            <span class="hud br"></span>
+
+            <div class="scan-chip" id="chip">Starting camera...</div>
+            <div class="countdown" id="countdown"></div>
+        </div>
+
+        <div class="progress">
+            <div id="bar"></div>
+        </div>
+
+        <ul class="regions" id="regions">
+            <li data-key="shoulders">Shoulders</li>
+            <li data-key="chest">Chest</li>
+            <li data-key="waist">Waist</li>
+            <li data-key="hips">Hips</li>
+            <li data-key="legs">Legs</li>
+            <li data-key="ankles">Ankles</li>
+        </ul>
+
+        <p id="cameraStatus" class="muted">Starting camera...</p>
+
+        <div class="steps" id="steps">
+            <div id="stepBody">Analyzing body proportions</div>
+            <div id="stepWorkout">Building workout plan</div>
+            <div id="stepDiet">Building diet plan</div>
+        </div>
+
+        <button id="startBtn" disabled>▶ Start Body Scan</button>
+        <button id="skipBtn" class="secondary">Skip scan</button>
+
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/camera.js') }}"></script>
+
+{% endblock %}

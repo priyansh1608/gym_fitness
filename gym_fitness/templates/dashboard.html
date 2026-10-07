@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+<div class="container">
+
+
+    <div class="hero">
+
+
+        <h1>
+            Fitness Dashboard
+        </h1>
+
+
+        <div class="card">
+
+            <h2>
+                Hello,
+                <span id="name">
+                    User
+                </span>
+            </h2>
+
+        </div>
+
+
+        <div class="grid">
+
+
+            <div class="card">
+
+                <p class="muted">
+                    BMI
+                </p>
+
+                <div class="metric" id="bmi">
+                    --
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <p class="muted">
+                    Estimated Calories
+                </p>
+
+                <div class="metric" id="calories">
+                    --
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <p class="muted">
+                    Protein Target
+                </p>
+
+                <div class="metric" id="protein">
+                    --
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <p class="muted">
+                    ML Classification
+                </p>
+
+                <div class="metric" id="modelClass">
+                    --
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="card" id="scanCard" style="display:none">
+
+            <h2>
+                Body Scan Result
+            </h2>
+
+            <p>
+                <b id="scanShape"></b>
+            </p>
+
+            <p class="muted" id="scanNote"></p>
+
+            <p class="muted" id="scanNumbers"></p>
+
+        </div>
+
+
+        <div class="card">
+
+
+            <h2>
+                Workout Plan
+            </h2>
+
+
+            <ul id="workout">
+
+            </ul>
+
+
+        </div>
+
+
+        <div class="card">
+
+
+            <h2>
+                Diet Plan
+            </h2>
+
+
+            <ul id="diet">
+
+            </ul>
+
+
+        </div>
+
+
+        <a href="/" class="btn">
+            Create New Plan
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+    const result =
+
+        JSON.parse(
+
+            sessionStorage.getItem(
+                "fitnessResult"
+            )
+
+            || "null"
+
+        );
+
+
+    if (!result) {
+
+
+        window.location.href = "/";
+
+
+    } else {
+
+
+        document
+            .getElementById("name")
+            .textContent =
+            result.name;
+
+
+        document
+            .getElementById("bmi")
+            .textContent =
+            result.bmi;
+
+
+        document
+            .getElementById("calories")
+            .textContent =
+            result.calories
+            + " kcal";
+
+
+        document
+            .getElementById("protein")
+            .textContent =
+            result.protein
+            + " g/day";
+
+
+        document
+            .getElementById("modelClass")
+            .textContent =
+            result.model_class;
+        if (result.scan) {
+
+            document.getElementById("scanCard").style.display = "block";
+
+            document.getElementById("scanShape").textContent =
+                result.scan.shape;
+
+            document.getElementById("scanNote").textContent =
+                result.scan.note;
+
+            document.getElementById("scanNumbers").textContent =
+                "Shoulder/hip ratio: " + result.scan.shoulder_hip_ratio +
+                "  |  Torso/leg ratio: " + result.scan.torso_leg_ratio +
+                "  (approximate, from camera pose)";
+
+        }
+
+
+
+
+        const workout =
+            document
+                .getElementById("workout");
+
+
+        result.workout.forEach(
+            function (item) {
+
+                const li =
+                    document.createElement(
+                        "li"
+                    );
+
+                li.textContent =
+                    item;
+
+                workout.appendChild(li);
+
+            }
+        );
+
+
+        const diet =
+            document
+                .getElementById("diet");
+
+
+        result.diet.forEach(
+            function (item) {
+
+                const li =
+                    document.createElement(
+                        "li"
+                    );
+
+                li.textContent =
+                    item;
+
+                diet.appendChild(li);
+
+            }
+        );
+
+    }
+
+
+</script>
+
+
+{% endblock %}
